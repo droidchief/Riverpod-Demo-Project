@@ -1,59 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CounterScreen extends StatefulWidget {
+final counterProvider = StateProvider((ref) => 0);
+
+class CounterScreen extends ConsumerWidget {
   const CounterScreen({super.key});
 
   @override
-  State<CounterScreen> createState() => _CounterScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final int counter = ref.watch(counterProvider);
 
-class _CounterScreenState extends State<CounterScreen> {
-  int counter = 0;
+    ref.listen<int>(counterProvider, (previous, next) {
+          if (next >= 5) {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text("Alert"),
+                  content: Text("Counter has reached it's limit ${counter+1}. Time to refresh!"),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("OK")
+                    )
+                  ],
+                );
+              }
+            );
+          }
+        }
+    );
 
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Counter"),
-        actions: const [
-          Icon(Icons.restart_alt)
-        ]
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                  "$counter",
-                  style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black
-                  )
-              ),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 20, right: 20),
-              child: FloatingActionButton(
-                backgroundColor: Colors.black,
+          title: const Text("Counter"),
+          actions: [
+            IconButton(
                 onPressed: () {
-                  counter++;
-                  setState(() {
-
-                  });
+                  ref.invalidate(counterProvider);
                 },
-                child: const Icon(Icons.add),
-              ),
-            ),
-          )
-        ],
+                icon: const Icon(Icons.refresh)
+            )
+          ]
+      ),
+      body: Center(
+        child: Text(
+            "$counter",
+            style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.black
+            )
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black,
+        onPressed: () {
+          ref.read(counterProvider.notifier).state++;
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
+
 }
