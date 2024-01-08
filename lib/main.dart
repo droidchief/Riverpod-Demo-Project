@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_demo_project/presentation/screens/user_list_screen.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const Center(
-        child: Text("Hello"),
+        child: UserListScreen(),
       ),
     );
   }

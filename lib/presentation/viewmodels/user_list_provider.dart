@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/model/user.dart';
 import '../../domain/usecase/provider.dart';
 
-class UserListProvider extends ChangeNotifier {
+class UserListProvider extends ChangeNotifier{
   final ChangeNotifierProviderRef ref;
   List<User>list = [];
   bool haveData = false;
@@ -16,6 +16,6 @@ class UserListProvider extends ChangeNotifier {
     haveData = true;
     notifyListeners();
   }
-  final getUsersProvider = ChangeNotifierProvider<UserListProvider>((ref) => UserListProvider(ref: ref));
-
 }
+
+final getUsersProvider = ChangeNotifierProvider<UserListProvider>((ref) => UserListProvider(ref: ref));

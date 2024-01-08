@@ -5,13 +5,7 @@ class NewUser {
   String? createdAt;
   String? updatedAt;
 
-  NewUser({
-    this.name,
-    this.job,
-    this.id,
-    this.createdAt,
-    this.updatedAt
-  });
+  NewUser({this.name, this.job, this.id, this.createdAt, this.updatedAt});
 
   NewUser.fromJson(Map<String, dynamic> json) {
     name = json['name'];
@@ -21,7 +15,7 @@ class NewUser {
     updatedAt = json['updatedAt'];
   }
 
-  Map<String, dynamic> toJson () {
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['job'] = job;

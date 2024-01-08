@@ -19,9 +19,19 @@ class UserRepositoryImpl implements UserRepository{
         },
       );
       return NewUser.fromJson(response);
-    }on DioError catch(e){
-      var error = DioException.fromDioError(e);
-      throw error.errorMessage;
+    }on DioException catch(e){
+      // var error = DioException.fromDioError(e);
+      // throw error.errorMessage;
+      if (e.response != null) {
+        // DioErrorType.RESPONSE
+        print('Dio error with response');
+        print(e.response!.data);
+        throw 'Error: ${e.response!.data}';
+      } else {
+        // DioErrorType.DEFAULT or DioErrorType.CONNECT_TIMEOUT, DioErrorType.RECEIVE_TIMEOUT, DioErrorType.SEND_TIMEOUT
+        print('Dio error without response');
+        throw 'Error: ${e.message}';
+      }
     }
   }
 
@@ -29,9 +39,20 @@ class UserRepositoryImpl implements UserRepository{
   Future<void> deleteUser(String id) async{
     try{
       await DioClient.instance.delete('$users/$id');
-    }on DioError catch(e){
-      var error = DioException.fromDioError(e);
-      throw error.errorMessage;
+    }on DioException catch(e){
+      // var error = DioException.fromDioError(e);
+      // throw error.errorMessage;
+
+      if (e.response != null) {
+        // DioErrorType.RESPONSE
+        print('Dio error with response');
+        print(e.response!.data);
+        throw 'Error: ${e.response!.data}';
+      } else {
+        // DioErrorType.DEFAULT or DioErrorType.CONNECT_TIMEOUT, DioErrorType.RECEIVE_TIMEOUT, DioErrorType.SEND_TIMEOUT
+        print('Dio error without response');
+        throw 'Error: ${e.message}';
+      }
     }
   }
 
@@ -41,9 +62,20 @@ class UserRepositoryImpl implements UserRepository{
       final response = await DioClient.instance.get(users);
       final userList = (response["data"] as List).map((e) => User.fromJson(e)).toList();
       return userList;
-    }on DioError catch(e){
-      var error = DioException.fromDioError(e);
-      throw error.errorMessage;
+    }on DioException catch(e){
+      // var error = DioException.fromDioError(e);
+      // throw error.errorMessage;
+
+      if (e.response != null) {
+        // DioErrorType.RESPONSE
+        print('Dio error with response');
+        print(e.response!.data);
+        throw 'Error: ${e.response!.data}';
+      } else {
+        // DioErrorType.DEFAULT or DioErrorType.CONNECT_TIMEOUT, DioErrorType.RECEIVE_TIMEOUT, DioErrorType.SEND_TIMEOUT
+        print('Dio error without response');
+        throw 'Error: ${e.message}';
+      }
     }
   }
 
@@ -59,9 +91,20 @@ class UserRepositoryImpl implements UserRepository{
         },
       );
       return NewUser.fromJson(response);
-    }on DioError catch(e){
-      var error = DioException.fromDioError(e);
-      throw error.errorMessage;
+    }on DioException catch(e){
+      // var error = DioException.fromDioError(e);
+      // throw error.errorMessage;
+
+      if (e.response != null) {
+        // DioErrorType.RESPONSE
+        print('Dio error with response');
+        print(e.response!.data);
+        throw 'Error: ${e.response!.data}';
+      } else {
+        // DioErrorType.DEFAULT or DioErrorType.CONNECT_TIMEOUT, DioErrorType.RECEIVE_TIMEOUT, DioErrorType.SEND_TIMEOUT
+        print('Dio error without response');
+        throw 'Error: ${e.message}';
+      }
     }
   }
 }
